@@ -20,7 +20,7 @@ vim.o.foldmethod = "expr"
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 
 local reload_lock_path = vim.fn.stdpath("config") .. "\\reload-lock.txt"
-function ReloadNeovimStart()
+function ReloadConfigStart()
 	local file = io.open(reload_lock_path, "a+")
 	if not file then
 		vim.print("Error: Could not load reload-lock. Cannot start new instance")
@@ -43,7 +43,7 @@ function ReloadNeovimStart()
 		vim.fn.system({"powershell", "Start-Process powershell \"nvim " .. path .. "\" ; Stop-Process -Id " .. pid})
 	end
 end
-function ReloadNeovimEnd()
+function ReloadConfigEnd()
 	local file = io.open(reload_lock_path, "r")
 	if not file then
 		vim.print("Error: Could not load reload-lock. Cannot unlock reload")
@@ -64,13 +64,35 @@ function ReloadNeovimEnd()
 	end
 end
 
---TODO: Remove config directory. Create new directory. Clone Github back to directory
---Details here: https://graphite.dev/guides/git-clone-existing-dir
---And here: https://stackoverflow.com/questions/7909167/how-to-quietly-remove-a-directory-with-content-in-powershell
-
-function RemoveConfig()
-	vim.fn.system({"powershell", "Remove-Item -LiteralPath " .. vim.fn.stdpath("config") .. "\\* -Force -Recurse"})
+--[[
+TODO: 
+	Holy fucking shit, this is a mess
+	What in the hell was I thinking
+	Rewrite this garbage using proper git commands like "git pull" and "git push"
+	This cloning bullshit only needs to be done on the first load
+	You only need to pull in the one folder, as well
+--]]--
+local config_github_url = "https://github.com/LunamNauta/Dotfiles"
+local config_github_nvim_folder = vim.fn.stdpath("config") .. "\\nvim"
+function DownloadConfig()
+	vim.fn.system({"powershell", "Remove-Item " .. vim.fn.stdpath("config") .. "\\* -Recurse -Force"})
+	vim.fn.system({"powershell", "git clone " .. config_github_url .. " " .. vim.fn.stdpath("config")})
+	vim.fn.system({"powershell", "Move-Item -Path " .. config_github_nvim_folder .. "\\* -Destination " .. vim.fn.stdpath("config")})
+	vim.fn.system({"powershell", "Remove-Item " .. config_github_nvim_folder .. " -Force"})
+	ReloadConfigStart()
 end
 
-vim.api.nvim_create_user_command("ReloadNvim", ReloadNeovimStart, {})
-vim.fn.timer_start(2000, ReloadNeovimEnd)
+--TODO: Check if .git folder exists
+function UploadConfig()
+	vim.fn.system({"powershell", "New-Item -Path " .. vim.fn.stdpath("config") .. " -Name nvim -ItemType \"directory\""})
+	vim.fn.system({"powershell", "Get-ChildItem -Path " .. vim.fn.stdpath("config") .. " | Where-Object {$_.Name -notin @(\"nvim\", \".git\")} | ForEach-Object {Move-Item -Path $_.FullName -Destination " .. config_github_nvim_folder .. "}"})
+	vim.fn.system({"powershell", "cd " .. vim.fn.stdpath("config") .. " ; " .. "git add -A ; git commit -m \"Neovim config updater\" ; git push origin main"})
+	vim.fn.system({"powershell", "Move-Item -Path " .. config_github_nvim_folder .. "\\* -Destination " .. vim.fn.stdpath("config")})
+	vim.fn.system({"powershell", "Remove-Item " .. config_github_nvim_folder .. " -Force"})
+	ReloadConfigStart()
+end
+
+vim.api.nvim_create_user_command("DownloadConfig", DownloadConfig, {})
+vim.api.nvim_create_user_command("UploadConfig", UploadConfig, {})
+vim.api.nvim_create_user_command("ReloadConfig", ReloadConfigStart, {})
+vim.fn.timer_start(2000, ReloadConfigEnd)
