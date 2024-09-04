@@ -28,7 +28,7 @@ return {{
 						fallback()
 					end
 				end, {"i", "s"}),
-				["<CR>"] = cmp.mapping.confirm({select = true, behavior = cmp.ConfirmBehavior.Replace})
+				["<CR>"] = cmp.mapping.confirm({select = false, behavior = cmp.ConfirmBehavior.Replace})
 			}),
 			sources = cmp.config.sources({
 				{name = "nvim_lsp"},

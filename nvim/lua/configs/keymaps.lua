@@ -39,14 +39,12 @@ vim.keymap.set("n", "cwd", function()
 	local remActual = (remCount >= depth) and 1 or (depth - remCount)
 	local index = FindNth(cwd, "\\", remActual)
 	local cwdActual = string.sub(cwd, 1, index)
-	vim.fn.setreg("*", cwdActual) 
+	vim.fn.setreg("*", cwdActual)
 end)
 
 vim.keymap.set("n", "gt", function() vim.cmd("BufferGoto " .. vim.v.count) end)
 vim.keymap.set("n", "<LEADER>tn", "<CMD>tabnew<CR>")
 vim.keymap.set("n", "<LEADER>tk", "<CMD>bd!<CR>")
-
-
 
 local telescope = require("telescope")
 local telescope_builtin = require("telescope.builtin")
