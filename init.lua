@@ -1,3 +1,8 @@
+--TODO: Remove extra vim.fn.system("sleep 1")'s
+--These function calls exist because without them, the shell functions sometimes, for whatever reason, fail
+--Perhaps it has something to do with the shell not finishing a previous command? I don't know how to deal with that
+--Sleeping the thread is easier than trying to find a better solution
+
 require("plugin_manager")
 require("configs.keymaps")
 
