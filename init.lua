@@ -48,6 +48,7 @@ function ReloadConfigStart()
 		local path = vim.fn.expand("%:p")
 		vim.cmd("bufdo edit!")
 		vim.fn.system("Start-Process nvim " .. path)
+		vim.fn.system("sleep 1")
 		vim.fn.system("Stop-Process -Id " .. pid)
 	end
 end
@@ -85,15 +86,20 @@ function DownloadConfig()
 	vim.fn.system("Remove-Item " .. vim.fn.stdpath("config") .. "\\* -Recurse -Force")
 	vim.fn.system("sleep 1")
 	vim.fn.system("git clone " .. config_github_url .. " " .. vim.fn.stdpath("config"))
+	vim.fn.system("sleep 1")
 	ReloadConfigStart()
 end
 
 function UploadConfig()
 	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
 		vim.fn.system("cd " .. vim.fn.stdpath("config"))
+		vim.fn.system("sleep 1")
 		vim.fn.system("git add -A")
+		vim.fn.system("sleep 1")
 		vim.fn.system("git commit -m \"Neovim config updater\"")
+		vim.fn.system("sleep 1")
 		vim.fn.system("git push origin main")
+		vim.fn.system("sleep 1")
 		ReloadConfigStart()
 		return
 	end
