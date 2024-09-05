@@ -1,6 +1,6 @@
 # Bootstrap
 In order to bootstrap the Neovim configuration,\
-you can use this git command: "git clone https://github.com/LunamNauta/NeovimDotfiles %localappdata%/nvim"
+you can use this git command: "git clone https://github.com/LunamNauta/NeovimDotfiles $env:LOCALAPPDATA/nvim"
 
 # Functions
 ## This configuration has a few functions that allow you to interface with github, these include:
