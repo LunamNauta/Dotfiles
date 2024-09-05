@@ -93,6 +93,7 @@ function UploadConfig()
 		vim.fn.system("git add -A")
 		vim.fn.system("git commit -m \"Neovim config updater\"")
 		vim.fn.system("git push origin main")
+		ReloadConfigStart()
 		return
 	end
 	vim.print("Error: Cannot upload config to remote repository. Remote repository was never cloned")
