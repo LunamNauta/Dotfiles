@@ -76,6 +76,7 @@ local config_github_url = "https://github.com/LunamNauta/NeovimDotfiles"
 function DownloadConfig()
 	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
 		vim.fn.system("git fetch origin")
+		vim.fn.system("sleep 1")
 		vim.fn.system("git reset --hard origin/main")
 		ReloadConfigStart()
 		return
