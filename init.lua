@@ -1,4 +1,3 @@
---TODO: Add support for loading (and uploading) dot files to github
 --TODO: When reloading the config, write to all open buffers (or at least remove all changes before reloading)
 
 require("plugin_manager")
@@ -10,14 +9,21 @@ vim.o.shiftwidth = 4
 vim.o.autochdir = true
 vim.o.wrap = false
 vim.o.cmdheight = 0
+vim.o.foldenable = false
 vim.o.shell = "pwsh"
 
 vim.o.clipboard = "unnamedplus"
 
---TODO: This only works for files supported by treesitter. Use AutoCommand with FileType to select syntax/indent method if treesitter is unavailable. See here: https://stackoverflow.com/questions/77220511/neovim-fold-code-with-foldmethod-syntax-or-foldmethod-expr-depending-on-tre
-vim.o.foldlevel = 999
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.api.nvim_create_autocmd({"FileType"}, {
+	callback = function()
+    	if require("nvim-treesitter.parsers").has_parser() then
+      		vim.o.foldmethod = "expr"
+      		vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+    	else
+      		vim.o.foldmethod = "syntax"
+    	end
+  	end
+})
 
 local reload_lock_path = vim.fn.stdpath("config") .. "\\reload-lock.txt"
 function ReloadConfigStart()
@@ -64,16 +70,7 @@ function ReloadConfigEnd()
 	end
 end
 
---[[
-TODO: 
-	Holy fucking shit, this is a mess
-	What in the hell was I thinking
-	Rewrite this garbage using proper git commands like "git pull" and "git push"
-	This cloning bullshit only needs to be done on the first load
-	You only need to pull in the one folder, as well
---]]--
 local config_github_url = "https://github.com/LunamNauta/NeovimDotfiles"
---local config_github_nvim_folder = vim.fn.stdpath("config") .. "\\nvim"
 function DownloadConfig()
 	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
 		vim.fn.system({"powershell", "git pull origin main"})
@@ -85,7 +82,6 @@ function DownloadConfig()
 	ReloadConfigStart()
 end
 
---TODO: Check if .git folder exists
 function UploadConfig()
 	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
 		vim.fn.system({"powershell", "cd " .. vim.fn.stdpath("config") .. " ; " .. "git add -A ; git commit -m \"Neovim config updater\" ; git push origin main"})		ReloadConfigStart()
