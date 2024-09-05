@@ -78,6 +78,7 @@ function DownloadConfig()
 		vim.fn.system("git fetch origin")
 		vim.fn.system("sleep 1")
 		vim.fn.system("git reset --hard origin/main")
+		vim.fn.system("sleep 1")
 		ReloadConfigStart()
 		return
 	end
