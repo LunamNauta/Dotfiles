@@ -1,3 +1,5 @@
+--TODO: Fix shell commands so that they work with pwsh.exe instead of powershell.exe
+
 require("plugin_manager")
 require("configs.keymaps")
 
@@ -8,8 +10,11 @@ vim.o.autochdir = true
 vim.o.wrap = false
 vim.o.cmdheight = 0
 vim.o.foldenable = false
-vim.o.shell = "pwsh"
 vim.o.clipboard = "unnamedplus"
+
+vim.o.shell = "pwsh"
+vim.o.shellcmdflag = "-command"
+vim.o.shellxquote = ''
 
 vim.api.nvim_create_autocmd({"FileType"}, {
 	callback = function()
@@ -44,7 +49,8 @@ function ReloadConfigStart()
 		local pid = vim.fn.getpid()
 		local path = vim.fn.expand("%:p")
 		vim.cmd("bufdo edit!")
-		vim.fn.system({"powershell", "Start-Process powershell \"nvim " .. path .. "\" ; Stop-Process -Id " .. pid})
+		vim.fn.system("Start-Process nvim " .. path)
+		vim.fn.system("Stop-Process -Id " .. pid)
 	end
 end
 function ReloadConfigEnd()
@@ -82,7 +88,11 @@ end
 
 function UploadConfig()
 	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
-		vim.fn.system({"powershell", "cd " .. vim.fn.stdpath("config") .. " ; " .. "git add -A ; git commit -m \"Neovim config updater\" ; git push origin main"})		ReloadConfigStart()
+		--vim.fn.system({"powershell", "cd " .. vim.fn.stdpath("config") .. " ; " .. "git add -A ; git commit -m \"Neovim config updater\" ; git push origin main"})		ReloadConfigStart()
+		vim.fn.system("cd " .. vim.fn.stdpath("config"))
+		vim.fn.system("git add -A")
+		vim.fn.system("git commit -m \"Neovim config updater\"")
+		vim.fn.system("git push origin main")
 		return
 	end
 	vim.print("Error: Cannot upload config to remote repository. Remote repository was never cloned")
