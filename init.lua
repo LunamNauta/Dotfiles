@@ -98,6 +98,7 @@ function UploadConfig()
 	vim.print("Error: Cannot upload config to remote repository. Remote repository was never cloned")
 end
 
+vim.api.nvim_create_user_command("EditConfig", function() vim.cmd("edit " .. vim.fn.stdpath("config") .. "\\init.lua") end, {})
 vim.api.nvim_create_user_command("DownloadConfig", DownloadConfig, {})
 vim.api.nvim_create_user_command("UploadConfig", UploadConfig, {})
 vim.api.nvim_create_user_command("ReloadConfig", ReloadConfigStart, {})
