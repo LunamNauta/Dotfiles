@@ -4,11 +4,22 @@ languages.treesitter = {"cpp", "c", "lua"}
 languages.lsp = {
 	{
 		name = "clangd",
-		filetypes = {"cpp", "hpp", "tpp", "cc", "hh", "c", "h"}
+		opts = {
+			filetypes = {"cpp", "hpp", "tpp", "cc", "hh", "c", "h"}
+		}
 	},
 	{
 		name = "lua_ls",
-		filetypes = {"lua"}
+		opts = {
+			filetypes = {"lua"},
+			settings = {
+				Lua = {
+        			diagnostics = {
+						globals = {"vim"},
+        			}
+				}
+			}
+		}
 	}
 }
 languages.lsp.GetNames = function()

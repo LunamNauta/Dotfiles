@@ -1,5 +1,3 @@
---TODO: When reloading the config, write to all open buffers (or at least remove all changes before reloading)
-
 require("plugin_manager")
 require("configs.keymaps")
 
@@ -11,7 +9,6 @@ vim.o.wrap = false
 vim.o.cmdheight = 0
 vim.o.foldenable = false
 vim.o.shell = "pwsh"
-
 vim.o.clipboard = "unnamedplus"
 
 vim.api.nvim_create_autocmd({"FileType"}, {
@@ -21,8 +18,8 @@ vim.api.nvim_create_autocmd({"FileType"}, {
       		vim.o.foldexpr = "nvim_treesitter#foldexpr()"
     	else
       		vim.o.foldmethod = "syntax"
-    	end
-  	end
+		end
+	end
 })
 
 local reload_lock_path = vim.fn.stdpath("config") .. "\\reload-lock.txt"
@@ -46,6 +43,7 @@ function ReloadConfigStart()
 		file:close()
 		local pid = vim.fn.getpid()
 		local path = vim.fn.expand("%:p")
+		vim.cmd("bufdo edit!")
 		vim.fn.system({"powershell", "Start-Process powershell \"nvim " .. path .. "\" ; Stop-Process -Id " .. pid})
 	end
 end
