@@ -48,7 +48,6 @@ function ReloadConfigStart()
 		local path = vim.fn.expand("%:p")
 		vim.cmd("bufdo edit!")
 		vim.fn.system("Start-Process nvim " .. path)
-		vim.fn.system("sleep 1")
 		vim.fn.system("Stop-Process -Id " .. pid)
 	end
 end
