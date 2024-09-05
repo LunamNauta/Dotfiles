@@ -1,5 +1,3 @@
---TODO: Fix shell commands so that they work with pwsh.exe instead of powershell.exe
-
 require("plugin_manager")
 require("configs.keymaps")
 
