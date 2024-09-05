@@ -77,18 +77,19 @@ end
 local config_github_url = "https://github.com/LunamNauta/NeovimDotfiles"
 function DownloadConfig()
 	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
-		vim.fn.system({"powershell", "git pull origin main"})
+		vim.fn.system("git fetch origin")
+		vim.fn.system("git reset --hard origin/main")
 		ReloadConfigStart()
 		return
 	end
-	vim.fn.system({"powershell", "Remove-Item " .. vim.fn.stdpath("config") .. "\\* -Recurse -Force"})
-	vim.fn.system({"powershell", "sleep 1 ; git clone " .. config_github_url .. " " .. vim.fn.stdpath("config")})
+	vim.fn.system("Remove-Item " .. vim.fn.stdpath("config") .. "\\* -Recurse -Force")
+	vim.fn.system("sleep 1")
+	vim.fn.system("git clone " .. config_github_url .. " " .. vim.fn.stdpath("config"))
 	ReloadConfigStart()
 end
 
 function UploadConfig()
 	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
-		--vim.fn.system({"powershell", "cd " .. vim.fn.stdpath("config") .. " ; " .. "git add -A ; git commit -m \"Neovim config updater\" ; git push origin main"})		ReloadConfigStart()
 		vim.fn.system("cd " .. vim.fn.stdpath("config"))
 		vim.fn.system("git add -A")
 		vim.fn.system("git commit -m \"Neovim config updater\"")
