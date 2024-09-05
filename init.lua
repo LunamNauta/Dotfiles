@@ -1,3 +1,6 @@
+--TODO: Fix issue where neovim instantiations started from pwsh.exe do not allow for reloading
+--If Neovim is opened from anywhere other than the nvim.exe, using open with on windows, shell commands fail
+
 --TODO: Remove extra vim.fn.system("sleep 1")'s
 --These function calls exist because without them, the shell functions sometimes, for whatever reason, fail
 --Perhaps it has something to do with the shell not finishing a previous command? I don't know how to deal with that
