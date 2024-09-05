@@ -20,9 +20,7 @@ return {{
 			},
 			mapping = cmp.mapping.preset.insert({
 				["<TAB>"] = cmp.mapping(function(fallback)
-					if cmp.visible() then
-						cmp.select_next_item()
-					elseif luasnip.expand_or_locally_jumpable() then
+					if luasnip.expand_or_locally_jumpable() then
 						luasnip.expand_or_jump()
 					else
 						fallback()
