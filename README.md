@@ -11,10 +11,10 @@ This will re-source all lua files, as well as create a fresh instantiation of Ne
 
 #### :DownloadConfig
 Downloads the configuration from the repository.\
-This will overwrite all files in Neovim's configuration path with the files from the repository.
+This will overwrite all files in Neovim's configuration path with the files from the repository (specifically, the files from the most recent commit).
 
 #### :UploadConfig
-Uploads the configuration to the repository.
+Uploads the configuration to the repository.\
 This will commit directly to the main branch.\
 This includes all changes that were made under Neovim's configuration path (modified files, created files, removed files, etc).
 
