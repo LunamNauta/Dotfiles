@@ -72,24 +72,26 @@ TODO:
 	This cloning bullshit only needs to be done on the first load
 	You only need to pull in the one folder, as well
 --]]--
-local config_github_url = "https://github.com/LunamNauta/Dotfiles"
-local config_github_nvim_folder = vim.fn.stdpath("config") .. "\\nvim"
+local config_github_url = "https://github.com/LunamNauta/NeovimDotfiles"
+--local config_github_nvim_folder = vim.fn.stdpath("config") .. "\\nvim"
 function DownloadConfig()
+	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
+		vim.fn.system({"powershell", "git pull origin main"})
+		ReloadConfigStart()
+		return
+	end
 	vim.fn.system({"powershell", "Remove-Item " .. vim.fn.stdpath("config") .. "\\* -Recurse -Force"})
-	vim.fn.system({"powershell", "git clone " .. config_github_url .. " " .. vim.fn.stdpath("config")})
-	vim.fn.system({"powershell", "Move-Item -Path " .. config_github_nvim_folder .. "\\* -Destination " .. vim.fn.stdpath("config")})
-	vim.fn.system({"powershell", "Remove-Item " .. config_github_nvim_folder .. " -Force"})
+	vim.fn.system({"powershell", "sleep 1 ; git clone " .. config_github_url .. " " .. vim.fn.stdpath("config")})
 	ReloadConfigStart()
 end
 
 --TODO: Check if .git folder exists
 function UploadConfig()
-	--vim.fn.system({"powershell", "New-Item -Path " .. vim.fn.stdpath("config") .. " -Name nvim -ItemType \"directory\""})
-	--vim.fn.system({"powershell", "Get-ChildItem -Path " .. vim.fn.stdpath("config") .. " | Where-Object {$_.Name -notin @(\"nvim\", \".git\")} | ForEach-Object {Move-Item -Path $_.FullName -Destination " .. config_github_nvim_folder .. "}"})
-	vim.fn.system({"powershell", "cd " .. vim.fn.stdpath("config") .. " ; " .. "git add -A ; git commit -m \"Neovim config updater\" ; git push origin main"})
-	--vim.fn.system({"powershell", "Move-Item -Path " .. config_github_nvim_folder .. "\\* -Destination " .. vim.fn.stdpath("config")})
-	--vim.fn.system({"powershell", "Remove-Item " .. config_github_nvim_folder .. " -Force"})
-	--ReloadConfigStart()
+	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
+		vim.fn.system({"powershell", "cd " .. vim.fn.stdpath("config") .. " ; " .. "git add -A ; git commit -m \"Neovim config updater\" ; git push origin main"})		ReloadConfigStart()
+		return
+	end
+	vim.print("Error: Cannot upload config to remote repository. Remote repository was never cloned")
 end
 
 vim.api.nvim_create_user_command("DownloadConfig", DownloadConfig, {})
