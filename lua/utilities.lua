@@ -82,6 +82,7 @@ utils.UnlockReload = function()
 	end
 	return false
 end
+--TODO: Fix issue where a Neovim instance running in pwsh isn't killed. A new instance is created, but the old one fails to die
 utils.ReloadConfig = function()
 	if utils.LockReload() then
 		local pid = vim.fn.getpid()
