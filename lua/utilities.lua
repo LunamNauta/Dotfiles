@@ -93,32 +93,33 @@ utils.ReloadConfig = function()
 end
 
 --TODO: Check the state of the reload-lock file, and don't allow downloads or uploads until Neovim has been unlocked
+--TODO: Call git functions as pwsh jobs. Wait for each one to finish instead of blindly waiting 1 second before each command
 local configGithubURL = "https://github.com/LunamNauta/NeovimDotfiles"
 utils.DownloadConfig = function()
 	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
 		vim.fn.system("git fetch origin")
-		vim.fn.system("sleep 0.5")
+		vim.fn.system("sleep 1")
 		vim.fn.system("git reset --hard origin/main")
-		vim.fn.system("sleep 0.5")
+		vim.fn.system("sleep 1")
 		utils.ReloadConfig()
 		return
 	end
 	vim.fn.system("Remove-Item " .. vim.fn.stdpath("config") .. "\\* -Recurse -Force")
-	vim.fn.system("sleep 0.5")
+	vim.fn.system("sleep 1")
 	vim.fn.system("git clone " .. configGithubURL .. " " .. vim.fn.stdpath("config"))
-	vim.fn.system("sleep 0.5")
+	vim.fn.system("sleep 1")
 	utils.ReloadConfig()
 end
 utils.UploadConfig = function()
 	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
 		vim.fn.system("cd " .. vim.fn.stdpath("config"))
-		vim.fn.system("sleep 0.5")
+		vim.fn.system("sleep 1")
 		vim.fn.system("git add -A")
-		vim.fn.system("sleep 0.5")
+		vim.fn.system("sleep 1")
 		vim.fn.system("git commit -m \"Neovim config updater\"")
-		vim.fn.system("sleep 0.5")
+		vim.fn.system("sleep 1")
 		vim.fn.system("git push origin main")
-		vim.fn.system("sleep 0.5")
+		vim.fn.system("sleep 1")
 		utils.ReloadConfig()
 		return
 	end
