@@ -14,6 +14,7 @@ if noerr then
 	vim.keymap.set("n", "<LEADER>fb", function()
 		local dir = utilities.OSIndependentPath(vim.fn.getcwd())
 		dir = utilities.MoveUpDirectory(dir, vim.v.count)
+		if vim.loop.os_uname().sysname == "Linux" then dir = "/" .. dir end
 		telescope.extensions.file_browser.file_browser({cwd = dir})
 	end)
 else vim.notify(
@@ -34,5 +35,10 @@ else vim.notify(
 	vim.log.levels.WARN
 ) end
 
+vim.keymap.set("n", "cwd", function()
+	local dir = utilities.OSIndependentPath(vim.fn.getcwd())
+	dir = utilities.MoveUpDirectory(dir, vim.v.count)
+	vim.fn.setreg("*", dir)
+end)
 vim.keymap.set("n", "<LEADER>tn", function() vim.cmd("tabnew") end)
 vim.keymap.set("n", "<LEADER>tk", function() vim.cmd("bdelete!") end)

@@ -28,7 +28,7 @@ utils.MoveUpDirectory = function(path, count)
     else return path end
 end
 
-local reloadLockPath = vim.fn.stdpath("config") .. "\\reload-lock.txt"
+local reloadLockPath = vim.fn.stdpath("config") .. "/reload-lock.txt"
 utils.LockReload = function()
 	local file = io.open(reloadLockPath, "a+")
 	if not file then
@@ -82,14 +82,11 @@ utils.UnlockReload = function()
 	end
 	return false
 end
---TODO: Fix issue where a Neovim instance running in pwsh isn't killed. A new instance is created, but the old one fails to die
 utils.ReloadConfig = function()
 	if utils.LockReload() then
-		local pid = vim.fn.getpid()
 		local path = vim.fn.expand("%:p")
-		vim.cmd("bufdo edit!")
 		vim.fn.system("Start-Process pwsh -ArgumentList \"-Command nvim " .. path .. "\"")
-		vim.fn.system("Stop-Process -Id " .. pid)
+		vim.cmd("qa!")
 	end
 end
 
@@ -97,7 +94,7 @@ end
 --TODO: Call git functions as pwsh jobs. Wait for each one to finish instead of blindly waiting 1 second before each command
 local configGithubURL = "https://github.com/LunamNauta/NeovimDotfiles"
 utils.DownloadConfig = function()
-	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
+	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "/.git") ~= 0 then
 		vim.fn.system("git fetch origin")
 		vim.fn.system("sleep 1")
 		vim.fn.system("git reset --hard origin/main")
@@ -105,14 +102,14 @@ utils.DownloadConfig = function()
 		utils.ReloadConfig()
 		return
 	end
-	vim.fn.system("Remove-Item " .. vim.fn.stdpath("config") .. "\\* -Recurse -Force")
+	vim.fn.system("Remove-Item " .. vim.fn.stdpath("config") .. "/* -Recurse -Force")
 	vim.fn.system("sleep 1")
 	vim.fn.system("git clone " .. configGithubURL .. " " .. vim.fn.stdpath("config"))
 	vim.fn.system("sleep 1")
 	utils.ReloadConfig()
 end
 utils.UploadConfig = function()
-	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "\\.git") ~= 0 then
+	if vim.fn.isdirectory(vim.fn.stdpath("config") .. "/.git") ~= 0 then
 		vim.fn.system("cd " .. vim.fn.stdpath("config"))
 		vim.fn.system("sleep 1")
 		vim.fn.system("git add -A")
