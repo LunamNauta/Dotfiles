@@ -9,3 +9,4 @@ vim.opt.clipboard = "unnamedplus"
 require("configs.settings")
 require("plugin_manager")
 require("configs.keymaps")
+require("configs.commands")
