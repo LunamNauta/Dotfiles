@@ -15,14 +15,17 @@ noerr, _ = pcall(require, settings.colorscheme)
 if not noerr then vim.notify("Warning: Could not find plugin 'catppuccin'", vim.log.levels.WARN)
 else vim.cmd.colorscheme(settings.colorscheme) end
 
+--TODO: Fix error when accessing files too high (e.g "C:/"). The error message is useless, so... Good luck future me
+local use_ignore_hidden = vim.fn.has("win32") == 0
 noerr, ret = pcall(require, "telescope")
 if noerr then
 	local telescope = require("telescope")
 	vim.keymap.set("n", "<LEADER>fb", function()
 		local dir = utilities.OSIndependentPath(vim.fn.getcwd())
 		dir = utilities.MoveUpDirectory(dir, vim.v.count)
-		telescope.extensions.file_browser.file_browser({cwd = dir, hidden = true, no_ignore = true})
-	end)
+		if use_ignore_hidden then telescope.extensions.file_browser.file_browser({cwd = dir, hidden = true, no_ignore = true})
+		else telescope.extensions.file_browser.file_browser({cwd = dir}) end
+		end)
 else vim.notify(
 	"Warning: Keymaps: Could not locate plugin 'telescope'. Failed to set keymaps: " .. ret,
 	vim.log.levels.WARN
@@ -34,7 +37,8 @@ if noerr then
 	vim.keymap.set("n", "<LEADER>ff", function()
 		local dir = utilities.OSIndependentPath(vim.fn.getcwd())
 		dir = utilities.MoveUpDirectory(dir, vim.v.count)
-		telescope_builtin.find_files({cwd = dir, hidden = true, no_ignore = true})
+		if use_ignore_hidden then telescope_builtin.find_files({cwd = dir, hidden = true, no_ignore = true})
+		else telescope_builtin.find_files({cwd = dir}) end
 	end)
 else vim.notify(
 	"Warning: Keymaps: Could not locate plugin 'telescope.builtin'. Failed to set keymaps: " .. ret,

@@ -13,7 +13,7 @@ utils.OSIndependentPath = function(dependentPath)
         elseif not isSlash then independentPath = independentPath .. dependentPath:sub(a,a) end
         pCharWasnt = not isSlash
     end
-	if vim.fn.has("macunix") and independentPath:sub(1,1) ~= '/' then independentPath = "/" .. independentPath
+	if vim.fn.has("macunix") ~= 0 and independentPath:sub(1,1) ~= '/' then independentPath = "/" .. independentPath
 	elseif slashCount == 0 then return independentPath .. "/" end
     return independentPath
 end
