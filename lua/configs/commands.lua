@@ -1,4 +1,3 @@
-local utilities = require("utilities")
 local noerr, ret = nil, nil
 
 noerr, ret = pcall(require, "nvim-treesitter.parsers")
@@ -18,8 +17,4 @@ else vim.notify(
 	vim.log.levels.WARN
 ) end
 
-vim.api.nvim_create_user_command("EditConfig", function() vim.cmd("edit " .. vim.fn.stdpath("config") .. "\\init.lua") end, {})
-vim.api.nvim_create_user_command("DownloadConfig", utilities.DownloadConfig, {})
-vim.api.nvim_create_user_command("UploadConfig", utilities.UploadConfig, {})
-vim.api.nvim_create_user_command("ReloadConfig", utilities.ReloadConfig, {})
-vim.fn.timer_start(2000, utilities.UnlockReload)
+vim.api.nvim_create_user_command("EditConfig", function() vim.cmd("edit " .. vim.fn.stdpath("config") .. "/init.lua") end, {})
