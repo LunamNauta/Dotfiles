@@ -26,5 +26,5 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
 	end
 	local cmd1 = "Remove-Item " .. cwd .. "\\* -Recurse -Force"
 	local cmd2 = "git clone https://github.com/LunamNauta/NeovimDotfiles " .. cwd
-	vim.fn.jobstart(cmd1)
+	vim.fn.jobstart(cmd1 .. " ; " .. cmd2)
 end, {})
