@@ -18,3 +18,10 @@ vim.api.nvim_create_user_command("UploadConfig", function()
 	vim.cmd("!git push -u origin main")
 	vim.cmd("silent !sleep 1")
 end, {})
+vim.api.nvim_create_user_command("DownloadConfig", function()
+	if vim.fn.isdirectory(cwd .. "\\.git") == 0 then
+		vim.notify("Error: 'DownloadConfig': Configuration file is not a git repository. Cannot download from GitHub")
+		return
+	end
+	vim.cmd("!git pull origin main")
+end)
