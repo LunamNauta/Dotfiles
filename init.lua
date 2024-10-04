@@ -1,0 +1,20 @@
+require("Settings.BuiltinSettings")
+require("PluginManager")
+require("Settings.PluginSettings")
+require("Settings.Keybinds")
+
+vim.api.nvim_create_user_command("UploadConfig", function()
+	local cwd = vim.fn.stdpath("config")
+	if vim.fn.isdirectory(cwd .. "\\.git") == 0 then
+		vim.cmd("!git init " .. cwd .. " --initial-branch=main")
+		vim.cmd("silent !sleep 1")
+		vim.cmd("!git remote add origin https://github.com/LunamNauta/NeovimDotfiles")
+		vim.cmd("silent !sleep 1")
+	end
+	vim.cmd("silent !git add -A")
+	vim.cmd("silent !sleep 1")
+	vim.cmd("!git commit -m \"Update from 'UploadConfig' (" .. os.date("%Y-%m-%d %H:%M:%S") .. ")\"")
+	vim.cmd("silent !sleep 1")
+	vim.cmd("!git push -u origin main")
+	vim.cmd("silent !sleep 1")
+end, {})
