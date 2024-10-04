@@ -28,3 +28,9 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
 	local cmd2 = "git clone https://github.com/LunamNauta/NeovimDotfiles " .. cwd
 	vim.fn.jobstart(cmd1 .. " ; " .. cmd2)
 end, {})
+
+--[[
+This is a test to see if I can successfully transfer my configuration between computers using GitHub
+I'm fairly certain that this version will work as intended
+Its really late, I have class tomorrow, and I have to sleep, so I really hope it works
+--]]
