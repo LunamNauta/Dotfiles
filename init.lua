@@ -24,7 +24,7 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
 		vim.notify("Error: 'DownloadConfig': Configuration file is not a git repository. Cannot download from GitHub")
 		return
 	end
-	local cmd1 = "Get-ChildItem -Path " .. cwd .. " -Include *.* -File -Recurse | foreach { $_.Delete()}"
+	local cmd1 = "Remove-Item " .. cwd .. " -Recurse -Force"
 	local cmd2 = "git clone https://github.com/LunamNauta/NeovimDotfiles " .. cwd
-	vim.fn.jobstart(cmd1 .. " ; " .. cmd2)
+	vim.cmd("!" .. cmd1 .. " ; " .. cmd2)
 end, {})
