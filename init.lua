@@ -24,4 +24,4 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
 		return
 	end
 	vim.cmd("!git pull origin main")
-end)
+end, {})
