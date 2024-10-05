@@ -1,11 +1,19 @@
-local telescope = require("telescope")
-vim.keymap.set("n", "<LEADER>ff", telescope.extensions.file_browser.file_browser)
+local noerr = nil
+local telescope = nil
+local transparent = nil
+local barbar = nil
 
-vim.keymap.set("n", "<LEADER>entran", "<CMD>TransparentEnable<CR>")
-vim.keymap.set("n", "<LEADER>distran", "<CMD>TransparentDisable<CR>")
+noerr, telescope = pcall(require, "telescope")
+if noerr then vim.keymap.set("n", "<LEADER>ff", telescope.extensions.file_browser.file_browser)
+else vim.notify("Warning: Could not find plugin 'telescope'", vim.log.levels.WARN) end
 
 vim.keymap.set("n", "<LEADER>tn", "<CMD>tabnew<CR>")
 vim.keymap.set("n", "<LEADER>tk", "<CMD>bdelete<CR>")
-vim.keymap.set("n", "gt", function() vim.cmd("BufferGoto " .. vim.v.count) end)
+noerr, barbar = pcall(require, "barbar")
+if noerr then vim.keymap.set("n", "gt", function() vim.cmd("BufferGoto " .. vim.v.count) end)
+else vim.notify("Warning: Could not find plugin 'barbar'", vim.log.levels.WARN) end
 
 vim.keymap.set("n", "<LEADER>di", vim.lsp.buf.hover)
+vim.keymap.set("n", "<LEADER>de", function() vim.diagnostic.open_float({border = "rounded"}) end)
+vim.keymap.set("n", "<LEADER>ddef", vim.lsp.buf.definition)
+vim.keymap.set("n", "<LEADER>dtyp", vim.lsp.buf.type_definition)

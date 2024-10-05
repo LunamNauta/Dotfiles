@@ -1,5 +1,6 @@
-local transparent = require("transparent")
-vim.cmd("TransparentEnable")
+local noerr = nil
+local catppuccin = nil
 
-local catppuccin = require("catppuccin")
-vim.cmd.colorscheme("catppuccin")
+noerr, catppuccin = pcall(require, "catppuccin")
+if noerr then vim.cmd.colorscheme("catppuccin")
+else vim.notify("Warning: Could not find plugin 'catppuccin'", vim.log.levels.WARN) end
