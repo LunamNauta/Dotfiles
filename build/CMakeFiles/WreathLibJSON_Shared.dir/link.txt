@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\WreathLibJSON_Shared.dir/objects.a
+C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\WreathLibJSON_Shared.dir/objects.a @CMakeFiles\WreathLibJSON_Shared.dir\objects1.rsp
+clang++ --target=x86_64-w64-mingw32 -shared -o bin\libWreathLibJSON_Shared.dll -Wl,--out-implib,lib\libWreathLibJSON_Shared.dll.a -Wl,--major-image-version,0,--minor-image-version,0 -Wl,--whole-archive CMakeFiles\WreathLibJSON_Shared.dir/objects.a -Wl,--no-whole-archive @CMakeFiles\WreathLibJSON_Shared.dir\linkLibs.rsp
