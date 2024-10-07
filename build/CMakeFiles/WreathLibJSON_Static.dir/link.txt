@@ -1,2 +1,0 @@
-C:\msys64\ucrt64\bin\ar.exe qc lib\libWreathLibJSON_Static.a CMakeFiles/WreathLibJSON_Static.dir/C_/Users/Ayden/Desktop/Projects/WreathJSON/src/JSONToken.cpp.obj CMakeFiles/WreathLibJSON_Static.dir/C_/Users/Ayden/Desktop/Projects/WreathJSON/src/JSONFile.cpp.obj
-C:\msys64\ucrt64\bin\ranlib.exe lib\libWreathLibJSON_Static.a

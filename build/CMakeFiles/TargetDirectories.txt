@@ -1,4 +1,0 @@
-C:/Users/Ayden/Desktop/Projects/WreathJSON/build/CMakeFiles/WreathLibJSON_Static.dir
-C:/Users/Ayden/Desktop/Projects/WreathJSON/build/CMakeFiles/WreathLibJSON_Shared.dir
-C:/Users/Ayden/Desktop/Projects/WreathJSON/build/CMakeFiles/edit_cache.dir
-C:/Users/Ayden/Desktop/Projects/WreathJSON/build/CMakeFiles/rebuild_cache.dir
