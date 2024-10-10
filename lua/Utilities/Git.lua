@@ -21,7 +21,15 @@ local function RemoveCWD(cwd)
     return "rm -rf " .. cwd
 end
 
-vim.api.nvim_create_user_command("UploadConfig", function()
+--[[
+local args = SplitString(opts.args, " ")
+if #args[1] == 0 then return end
+local str = LinesFromFile_Str(vim.fn.stdpath("config") .. "\\DefaultFiles\\" .. args[1])
+vim.api.nvim_paste(str, false, -1)
+--]]
+
+function UploadConfig(opts)
+    for _, c in ipairs(opts) do if c == "\"" then c = "'" end end
     local cwd = vim.fn.stdpath("config")
     local oldCwd = vim.loop.cwd()
     vim.cmd("cd " .. cwd)
@@ -33,12 +41,15 @@ vim.api.nvim_create_user_command("UploadConfig", function()
     end
     vim.cmd("silent !git add -A ")
     vim.cmd("silent !" .. SleepN(1))
-    vim.cmd("!git commit -m \"Update from 'UploadConfig' (" .. os.date("%Y-%m-%d %H:%M:%S") .. ")\"")
+    local timeMessage = "Update from 'UploadConfig' (" .. os.date("%Y-%m-%d %H:%M:%S") .. ")"
+    vim.cmd("!git commit -m \"" .. timeMessage .. opts.args .. "\"")
     vim.cmd("silent !" .. SleepN(1))
     vim.cmd("!git push -u origin " .. branch)
     vim.cmd("silent !" .. SleepN(1))
     vim.cmd("cd " .. oldCwd)
-end, {})
+end
+
+vim.api.nvim_create_user_command("UploadConfig", UploadConfig, {nargs = "?"})
 vim.api.nvim_create_user_command("DownloadConfig", function()
     local cwd = vim.fn.stdpath("config")
     local oldCwd = vim.loop.cwd()
