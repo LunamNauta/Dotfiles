@@ -11,7 +11,7 @@ end
 
 local function RemoveCWD(cwd)
     if WVim.is_windows then return "Remove-Item " .. JoinPath(cwd, "*") .. " -Recurse -Force" end
-    return "rm -rf " .. JoinPath(cwd, "*")
+    return "rm -rf " .. cwd --JoinPath(cwd, "*")
 end
 local function SleepN(n)
     return "sleep " .. n
