@@ -43,7 +43,9 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
         vim.notify("Error: 'DownloadConfig': Configuration file is not a git repository. Cannot download from GitHub")
         return
     end
-    local cmd2 = "git clone git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd
-    vim.fn.jobstart(JoinCommand(RemoveCWD(cwd), cmd2))
+    --local cmd2 = "git clone git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd
+    --vim.fn.jobstart(JoinCommand(RemoveCWD(cwd), cmd2))
+    vim.cmd("!" .. RemoveCWD(cwd))
+    vim.cmd("!git clone git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd)
     vim.cmd("cd " .. oldCwd)
 end, {})
