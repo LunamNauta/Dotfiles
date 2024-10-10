@@ -21,15 +21,8 @@ local function RemoveCWD(cwd)
     return "rm -rf " .. cwd
 end
 
---[[
-local args = SplitString(opts.args, " ")
-if #args[1] == 0 then return end
-local str = LinesFromFile_Str(vim.fn.stdpath("config") .. "\\DefaultFiles\\" .. args[1])
-vim.api.nvim_paste(str, false, -1)
---]]
-
 function UploadConfig(opts)
-    for _, c in ipairs(opts) do if c == "\"" then c = "'" end end
+    opts.args = string.gsub(opts.args, "\"", "'")
     local cwd = vim.fn.stdpath("config")
     local oldCwd = vim.loop.cwd()
     vim.cmd("cd " .. cwd)
@@ -42,7 +35,7 @@ function UploadConfig(opts)
     vim.cmd("silent !git add -A ")
     vim.cmd("silent !" .. SleepN(1))
     local timeMessage = "Update from 'UploadConfig' (" .. os.date("%Y-%m-%d %H:%M:%S") .. ")"
-    vim.cmd("!git commit -m \"" .. timeMessage .. opts.args .. "\"")
+    vim.cmd("!git commit -m \"" .. timeMessage .. " : " .. opts.args .. "\"")
     vim.cmd("silent !" .. SleepN(1))
     vim.cmd("!git push -u origin " .. branch)
     vim.cmd("silent !" .. SleepN(1))
