@@ -52,7 +52,7 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
         return
     end
 
-    vim.cmd("cd " .. vim.fn.stdpath("data"))
+    --vim.cmd("cd " .. vim.fn.stdpath("data"))
     vim.cmd("!git pull origin " .. branch)
 
     --[[
