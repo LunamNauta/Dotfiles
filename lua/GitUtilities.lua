@@ -11,7 +11,7 @@ end
 
 local function RemoveCWD(cwd)
     if WVim.is_windows then return "Remove-Item " .. JoinPath(cwd, "*") .. " -Recurse -Force" end
-    return "rm -rf " .. cwd --JoinPath(cwd, "*")
+    return "rm -rf " .. JoinPath(cwd, "*")
 end
 local function AddCWD(cwd)
     if WVim.is_windows then end
@@ -47,11 +47,9 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
         vim.notify("Error: 'DownloadConfig': Configuration file is not a git repository. Cannot download from GitHub")
         return
     end
-    --local cmd2 = "git clone git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd
-    --vim.fn.jobstart(JoinCommand(RemoveCWD(cwd), cmd2))
     vim.cmd("cd " .. vim.fn.stdpath("data"))
     vim.cmd("!" .. RemoveCWD(cwd))
-    vim.cmd("!" .. AddCWD(cwd))
-    vim.cmd("!git clone git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd)
+    --vim.cmd("!" .. AddCWD(cwd))
+    vim.cmd("!git clone -b " .. branch .. " git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd)
     vim.cmd("cd " .. oldCwd)
 end, {})
