@@ -51,15 +51,10 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
         vim.notify("Error: 'DownloadConfig': Configuration file is not a git repository. Cannot download from GitHub")
         return
     end
-
-    --vim.cmd("cd " .. vim.fn.stdpath("data"))
-    vim.cmd("!git pull origin " .. branch)
-
-    --[[
     if not WVim.is_windows then vim.cmd("cd " .. vim.fn.stdpath("data")) end
     vim.cmd("!" .. RemoveCWD(cwd))
     if not WVim.is_windows then vim.cmd("!mkdir " .. cwd) end
     vim.cmd("!git clone -b " .. branch .. " " .. repo .. " " .. cwd)
     vim.cmd("cd " .. oldCwd)
-    --]]
+    --Test
 end, {})
