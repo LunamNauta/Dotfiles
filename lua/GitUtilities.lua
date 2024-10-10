@@ -1,24 +1,23 @@
 local branch = WVim.is_windows and "main" or "linux"
 
+--Identical functionality for Linux vs. Windows
+--Identical implementation for Linux vs. Windows
+local function SleepN(n) return "sleep " .. n end
+
+--Identical functionality for Linux vs. Windows
+--Different implementation for Linux vs. Windows
 local function JoinPath(p1, p2)
     if WVim.is_windows then return p1 .. "\\" .. p2 end
     return p1 .. "/" .. p2
 end
-local function JoinCommand(c1, c2)
-    if WVim.is_windows then return c1 .. " ; " .. c2 end
-    return c1 .. " && " .. c2
-end
 
+--Different functionality for Linux vs. Windows
+--Different implementation for Linux vs. Windows
+--On Windows, this just removes all the items under the CWD
+--On Linux, this removes the CWD outright
 local function RemoveCWD(cwd)
     if WVim.is_windows then return "Remove-Item " .. JoinPath(cwd, "*") .. " -Recurse -Force" end
-    return "rm -rf " .. JoinPath(cwd, "*")
-end
-local function AddCWD(cwd)
-    if WVim.is_windows then end
-    return "mkdir " .. cwd
-end
-local function SleepN(n)
-    return "sleep " .. n
+    return "rm -rf " .. cwd
 end
 
 vim.api.nvim_create_user_command("UploadConfig", function()
@@ -47,9 +46,9 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
         vim.notify("Error: 'DownloadConfig': Configuration file is not a git repository. Cannot download from GitHub")
         return
     end
-    vim.cmd("cd " .. vim.fn.stdpath("data"))
+    if not WVim.is_windows then vim.cmd("cd " .. vim.fn.stdpath("data")) end
     vim.cmd("!" .. RemoveCWD(cwd))
-    --vim.cmd("!" .. AddCWD(cwd))
+    if not WVim.is_windows then vim.cmd("!mkdir " .. cwd) end
     vim.cmd("!git clone -b " .. branch .. " git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd)
     vim.cmd("cd " .. oldCwd)
 end, {})
