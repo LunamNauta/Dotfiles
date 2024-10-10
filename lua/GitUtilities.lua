@@ -1,5 +1,5 @@
-local branch = "linux" --WVim.is_windows and "main" or "linux"
 local repo = (WVim.is_windows and "https://github.com/" or "git@github.com:") .. "LunamNauta/NeovimDotfiles" .. (WVim.is_windows and ".git" or "")
+local branch = "testing"
 
 --Identical functionality for Linux vs. Windows
 --Identical implementation for Linux vs. Windows
