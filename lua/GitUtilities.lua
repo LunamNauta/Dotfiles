@@ -4,6 +4,11 @@ local function JoinPath(p1, p2)
     if WVim.is_windows then return p1 .. "\\" .. p2 end
     return p1 .. "/" .. p2
 end
+local function JoinCommand(c1, c2)
+    if WVim.is_windows then return c1 .. " ; " .. c2 end
+    return c1 .. " && " .. c2
+end
+
 local function RemoveCWD(cwd)
     if WVim.is_windows then return "Remove-Item " .. JoinPath(cwd, "*") .. " -Recurse -Force" end
     return "rm -rf " .. JoinPath(cwd, "*")
@@ -39,6 +44,6 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
         return
     end
     local cmd2 = "git clone git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd
-    vim.fn.jobstart(RemoveCWD(cwd) .. " ; " .. cmd2)
+    vim.fn.jobstart(JoinCommand(RemoveCWD(cwd), cmd2))
     vim.cmd("cd " .. oldCwd)
 end, {})
