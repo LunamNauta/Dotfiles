@@ -49,6 +49,7 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
     end
     --local cmd2 = "git clone git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd
     --vim.fn.jobstart(JoinCommand(RemoveCWD(cwd), cmd2))
+    vim.cmd("cd " .. vim.fn.stdpath("data"))
     vim.cmd("!" .. RemoveCWD(cwd))
     vim.cmd("!" .. AddCWD(cwd))
     vim.cmd("!git clone git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd)
