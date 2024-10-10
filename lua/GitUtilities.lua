@@ -1,4 +1,4 @@
-local branch = WVim.is_windows and "main" or "linux"
+local branch = "linux" --WVim.is_windows and "main" or "linux"
 
 --Identical functionality for Linux vs. Windows
 --Identical implementation for Linux vs. Windows
