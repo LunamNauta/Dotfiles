@@ -12,11 +12,15 @@ vim.opt.expandtab = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+--[[
 vim.opt.shell = "pwsh"
 vim.opt.shellxquote = ""
 vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
 vim.opt.shellquote = ""
 vim.opt.shellpipe = "| Out-File -Encoding UTF8 %s"
 vim.opt.shellredir = "| Out-File -Encoding UTF8 %s"
+--]]
+
+vim.opt.shell = "bash"
 
 vim.diagnostic.config({virtual_text = false})
