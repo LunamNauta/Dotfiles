@@ -56,5 +56,4 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
     if not WVim.is_windows then vim.cmd("!mkdir " .. cwd) end
     vim.cmd("!git clone -b " .. branch .. " " .. repo .. " " .. cwd)
     vim.cmd("cd " .. oldCwd)
-    --Test
 end, {})
