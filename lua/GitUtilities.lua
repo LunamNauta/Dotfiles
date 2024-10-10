@@ -1,15 +1,15 @@
-local is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win32unix") == 1
-local branch = is_windows and "main" or "linux"
+local branch = WVim.is_windows and "main" or "linux"
 
+local function JoinPath(p1, p2)
+    if WVim.is_windows then return p1 .. "\\" .. p2 end
+    return p1 .. "/" .. p2
+end
 local function RemoveCWD(cwd)
-    return "Remove-Item " .. cwd .. "\\* -Recurse -Force"
+    if WVim.is_windows then return "Remove-Item " .. JoinPath(cwd, "*") .. " -Recurse -Force" end
+    return "rm -rf " .. JoinPath(cwd, "*")
 end
 local function SleepN(n)
     return "sleep " .. n
-end
-local function JoinPath(p1, p2)
-    if is_windows then return p1 .. "\\" .. p2 end
-    return p1 .. "/" .. p2
 end
 
 vim.api.nvim_create_user_command("UploadConfig", function()
