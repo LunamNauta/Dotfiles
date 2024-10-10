@@ -1,4 +1,3 @@
-local languages = require("Settings.Languages")
 return {{
 	"williamboman/mason.nvim",
 	dependencies = {
@@ -9,7 +8,7 @@ return {{
 	opts = {
 		mason = {},
 		mason_lsp = {
-			ensure_installed = languages.mason_lsp
+			ensure_installed = WVim.languages.mason_lsp
 		}
 	},
 	config = function(_, opts)

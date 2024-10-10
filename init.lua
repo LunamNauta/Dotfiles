@@ -1,7 +1,11 @@
-require("Settings.BuiltinSettings")
+require("Settings.WVim")
+require("Settings.Builtin")
+
 require("PluginManager")
-require("Settings.PluginSettings")
+
+require("Settings.Plugins")
 require("Settings.Keybinds")
-require("GitUtilities")
 
 require("Utilities.DefaultFiles")
+require("Utilities.Config")
+require("Utilities.Git")
