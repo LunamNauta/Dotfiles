@@ -1,4 +1,5 @@
 local branch = "linux" --WVim.is_windows and "main" or "linux"
+local repo = (WVim.is_windows and "https://github.com/" or "git&github.com:") .. "LunamNauta/NeovimDotfiles" .. (WVim.is_windows and ".git" or "")
 
 --Identical functionality for Linux vs. Windows
 --Identical implementation for Linux vs. Windows
@@ -27,7 +28,7 @@ vim.api.nvim_create_user_command("UploadConfig", function()
     if vim.fn.isdirectory(JoinPath(cwd, ".git")) == 0 then
 	    vim.cmd("!git init " .. " --initial-branch=" .. branch)
 	    vim.cmd("silent !" .. SleepN(1))
-	    vim.cmd("!git remote add origin git@github.com:LunamNauta/NeovimDotfiles.git")
+	    vim.cmd("!git remote add origin " .. repo)
 	    vim.cmd("silent !" .. SleepN(1))
     end
     vim.cmd("silent !git add -A ")
@@ -49,6 +50,6 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
     if not WVim.is_windows then vim.cmd("cd " .. vim.fn.stdpath("data")) end
     vim.cmd("!" .. RemoveCWD(cwd))
     if not WVim.is_windows then vim.cmd("!mkdir " .. cwd) end
-    vim.cmd("!git clone -b " .. branch .. " git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd)
+    vim.cmd("!git clone -b " .. branch .. " " .. repo .. " " .. cwd)
     vim.cmd("cd " .. oldCwd)
 end, {})
