@@ -13,6 +13,10 @@ local function RemoveCWD(cwd)
     if WVim.is_windows then return "Remove-Item " .. JoinPath(cwd, "*") .. " -Recurse -Force" end
     return "rm -rf " .. cwd --JoinPath(cwd, "*")
 end
+local function AddCWD(cwd)
+    if WVim.is_windows then end
+    return "mkdir " .. cwd
+end
 local function SleepN(n)
     return "sleep " .. n
 end
@@ -46,6 +50,7 @@ vim.api.nvim_create_user_command("DownloadConfig", function()
     --local cmd2 = "git clone git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd
     --vim.fn.jobstart(JoinCommand(RemoveCWD(cwd), cmd2))
     vim.cmd("!" .. RemoveCWD(cwd))
+    vim.cmd("!" .. AddCWD(cwd))
     vim.cmd("!git clone git@github.com:LunamNauta/NeovimDotfiles.git " .. cwd)
     vim.cmd("cd " .. oldCwd)
 end, {})
