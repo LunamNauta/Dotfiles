@@ -1,0 +1,99 @@
+# -------------------------------- Format --------------------------------
+format = """
+[╭─](bold white)\
+$username$hostname\
+$directory\
+$git_branch\
+$git_status \
+$package\
+$python\
+$lua\
+$nodejs\
+$golang\
+$haskell\
+$rust\
+$ruby\
+$aws\
+$docker_context\
+$jobs\
+$line_break\
+[╰─](bold white)$character
+"""
+
+right_format = """
+$cmd_duration \
+$time
+"""
+
+add_newline = false
+
+# -------------------------------- Sections --------------------------------
+[username]
+style_user = "fg:#b4befe"
+format = '\[[$user]($style)'
+disabled = false
+show_always = true
+
+[hostname]
+style = "fg:#b4befe"
+ssh_only = false
+format = '[@$hostname]($style)\]'
+disabled = false
+
+[directory]
+style = "fg:#94e2d5"
+format = "[:$path]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+truncate_to_repo = true
+
+[package]
+symbol = "󰏖 "
+
+[directory.substitutions]
+"\\" = "/"
+
+[fill]
+symbol = ' '
+
+[python]
+symbol = " "
+style = "fg:#FFD666"
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+pyenv_prefix = ''
+
+[nodejs]
+symbol = " "
+style = "fg:#73daca"
+format = '[$symbol($version)]($style)'
+
+[golang]
+symbol = " "
+style = "fg:#73daca"
+format = '[$symbol($version)]($style)'
+
+[rust]
+symbol = " "
+style = "fg:#FFD666"
+format = '[$symbol($version)]($style)'
+
+[git_branch]
+symbol = " "
+style = "fg:green"
+format = " [on](white) [$symbol$branch]($style)"
+
+[git_status]
+style = "fg:red"
+format = '([\[$all_status$ahead_behind\]]($style))'
+
+[cmd_duration]
+min_time = 0
+style = "fg:#73daca"
+format = "[$duration]($style)"
+
+[time]
+disabled = false
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
