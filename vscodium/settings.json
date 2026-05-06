@@ -1,0 +1,22 @@
+{
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "editor.fontFamily": "'Input Nerd Font', 'monospace', monospace",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "editor.fontLigatures": true,
+    "explorer.confirmDelete": false,
+    "catppuccin-noctis-icons.hidesExplorerArrows": false,
+    "workbench.iconTheme": "catppuccin noctis icons",
+    "terminal.integrated.initialHint": false,
+    "explorer.confirmDragAndDrop": false,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+
+    "search.quickOpen.includeHistory": false,
+    "explorer.openEditors.sortOrder": "alphabetical",
+
+    "editor.formatOnType": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false
+}

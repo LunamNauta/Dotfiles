@@ -1,0 +1,10 @@
+alexdauenhauer.catppuccin-noctis-icons
+asvetliakov.vscode-neovim
+catppuccin.catppuccin-vsc
+llvm-vs-code-extensions.vscode-clangd
+mads-hartmann.bash-ide-vscode
+ms-dotnettools.vscode-dotnet-runtime
+muhammad-sammy.csharp
+redhat.java
+tomoki1207.pdf
+twxs.cmake
