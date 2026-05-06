@@ -4,3 +4,6 @@
 [submodule "themes/catppuccin/btop"]
 	path = themes/catppuccin/btop
 	url = https://github.com/catppuccin/btop.git
+[submodule "themes/catppuccin/qt6ct"]
+	path = themes/catppuccin/qt6ct
+	url = https://github.com/catppuccin/qt5ct
