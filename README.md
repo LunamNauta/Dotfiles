@@ -1,29 +1,43 @@
-Themes
-  Catppuccin
+# System Configuration
 
-Desktop
-  Environment  : niri
-  Shell        : noctalia
-  Editor       : vscodium
-  Office       : libreoffice
-  File Manager : nemo
+## Themes
+- **Catppuccin**
 
-Terminal
-  Emulator     : foot
-  Prompt       : starship
-  Multiplexer  : tmux
-  Editor       : neovim
-  File Manager : yazi
+---
 
-Networking
-  Bluetooth Manager : bluetuith
-  Network Manager   : nmtui
-  Misc
-    syncthing
-    tailscale
+## Desktop
+- **Environment:** niri  
+- **Shell:** noctalia  
+- **Editor:** vscodium  
+- **Office:** libreoffice  
+- **File Manager:** nemo  
 
-Devices
-  Thermals : tlp / lactd
+---
 
-Task Manager  : btop
-Disk Analyzer : gdu
+## Terminal
+- **Emulator:** foot  
+- **Prompt:** starship  
+- **Multiplexer:** tmux  
+- **Editor:** neovim  
+- **File Manager:** yazi  
+
+---
+
+## Networking
+- **Bluetooth Manager:** bluetuith  
+- **Network Manager:** nmtui  
+
+### Misc
+- syncthing  
+- tailscale  
+
+---
+
+## Devices
+- **Thermals:** tlp / lactd  
+
+---
+
+## Utilities
+- **Task Manager:** btop  
+- **Disk Analyzer:** gdu  
